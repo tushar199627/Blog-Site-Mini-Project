@@ -15,10 +15,10 @@ const authToken = async function (req, res, next) {
         if (!decodedToken) {
             return res.status(400).send({ status: false, msg: "token is invalid" });
         }
-        
+      
         //authorization
         req.authorId=decodedToken.authorId
-
+    
         next();
 
     } catch (err) {
