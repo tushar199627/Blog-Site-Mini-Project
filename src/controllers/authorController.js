@@ -36,7 +36,7 @@ const createAuthor = async function (req, res) {
         if (!password) {
             return res.status(400).send({ status: false, message: "author password is required" })
         }
-        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{9,}$/.test(password)) {
             res.status(400).send({ status: false, message: `password should contain atleastone number or one alphabet and should be 8 character long` });
         }
 

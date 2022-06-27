@@ -4,7 +4,7 @@ const BlogModel = require("../models/blogModel")
 //create blog
 const createBlog = async function (req, res) {
     try {
-        const { authorId, title, body, catagory, ispublished, tags, subcategory } = req.body
+        const { authorId, title, body, category, ispublished, tags, subcategory } = req.body
 
         //validation starts
         if (!authorId) {
@@ -14,7 +14,7 @@ const createBlog = async function (req, res) {
         } else if (!body) {
             res.status(400).send({ status: false, msg: "body is required" })
         } else
-            if (!catagory) {
+            if (!category) {
                 res.status(400).send({ status: false, msg: "catagory is required" })
             } else {
                 const author = await AuthorModel.findById(authorId);
@@ -28,7 +28,7 @@ const createBlog = async function (req, res) {
                     title,
                     body,
                     authorId,
-                    catagory,
+                    category,
                     tags,
                     subcategory,
                     ispublished: ispublished ? ispublished : false,
@@ -52,14 +52,14 @@ const blogs = async function (req, res) {
 
     try {
         let authorId = req.query.authorId
-        let catagory = req.query.catagory
+        let category = req.query.category
         let tagkey = req.query.tags
         let sub = req.query.subcategory
         let list1 = await BlogModel.find({ isDeleted: false, ispublished: true })
         if (list1.length==0) { 
             res.status(404).send({ status: false, msg: "blog not found" }) 
         }
-        let bloglist = await BlogModel.find({ isDeleted: false, ispublished: true, $or: [{ authorId: authorId }, { catagory: catagory }, { tags: tagkey }, { subcategory: sub }] })
+        let bloglist = await BlogModel.find({ isDeleted: false, ispublished: true, $or: [{ authorId: authorId }, { category: category }, { tags: tagkey }, { subcategory: sub }] })
         if (bloglist.length === 0) {
             res.status(404).send({ status: false, msg: "No blog Found" })
         } else {
@@ -172,14 +172,14 @@ const deleteQuery = async function (req, res) {
 
     try {
       let authorId = req.query.authorId;
-      let catagory = req.query.catagory;
+      let category = req.query.catagory;
       let tags = req.query.tags;
       let subcatagory = req.query.subcatagory;
       let filter = {}
   
-        if (!isValid(catagory))
+        if (!isValid(category))
           return res.status(400).send({ status: false, msg: "Please enter the category in right format...!" })
-        filter.catagory = catagory
+        filter.catagory = category
       
         if (!isValid(tags))
           return res.status(400).send({ status: false, msg: "Please enter the tag in right format...!" });
